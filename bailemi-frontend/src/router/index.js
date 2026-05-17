@@ -9,6 +9,30 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
+    path: '/charts',
+    name: 'Charts',
+    component: () => import('@/views/music/Charts.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/artists',
+    name: 'Artists',
+    component: () => import('@/views/music/Artists.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/playlists',
+    name: 'Playlists',
+    component: () => import('@/views/music/Playlists.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: () => import('@/views/music/About.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/auth/Login.vue'),
