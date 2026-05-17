@@ -31,6 +31,16 @@ const routes = [
     name: 'Admin',
     component: () => import('@/views/admin/Index.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/artist/:id',
+    name: 'ArtistDetail',
+    component: () => import('@/views/music/ArtistDetail.vue')
+  },
+  {
+    path: '/album/:id',
+    name: 'AlbumDetail',
+    component: () => import('@/views/music/AlbumDetail.vue')
   }
 ]
 

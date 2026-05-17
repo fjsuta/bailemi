@@ -22,8 +22,8 @@
         </div>
       </header>
 
-      <div class="text-center py-16 mb-8">
-        <h2 class="text-5xl font-bold gradient-text mb-4">发现好音乐，感受美好</h2>
+      <div class="text-center py-8 mb-8">
+        <h2 class="text-4xl md:text-5xl font-bold gradient-text mb-4">发现好音乐，感受美好</h2>
         <p class="text-slate-400 text-lg mb-8">百万首歌曲，随时随地，想听就听</p>
         
         <!-- 搜索框 -->
@@ -64,29 +64,29 @@
         </div>
       </div>
 
+      <!-- 轮播图 -->
       <section class="mb-12">
-        <h3 class="text-2xl font-bold mb-6">热门歌曲</h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          <div
-            v-for="song in songs"
-            :key="song.id"
-            @click="playSong(song)"
-            class="glass-dark rounded-2xl p-4 cursor-pointer hover:scale-105 transition-all"
-          >
-            <div class="relative mb-3">
-              <img :src="song.cover_url || 'https://picsum.photos/200/200?random=' + song.id" class="w-full aspect-square object-cover rounded-xl" />
-              <div class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-xl opacity-0 hover:opacity-100 transition-all">
-                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-xl">▶</div>
-              </div>
-            </div>
-            <h4 class="font-semibold truncate">{{ song.title }}</h4>
-            <p class="text-slate-400 text-sm truncate">{{ typeof song.artist === 'string' ? song.artist : song.artist?.name }}</p>
-          </div>
-        </div>
+        <Banner />
       </section>
 
+      <!-- 每日推荐 -->
       <section class="mb-12">
-        <h3 class="text-2xl font-bold mb-6">推荐歌单</h3>
+        <Recommend />
+      </section>
+
+      <!-- 排行榜 -->
+      <section class="mb-12">
+        <Chart />
+      </section>
+
+      <!-- 歌单分类墙 -->
+      <section class="mb-12">
+        <CategoryWall />
+      </section>
+
+      <!-- 热门歌单 -->
+      <section class="mb-12">
+        <h3 class="text-2xl font-bold mb-6">热门歌单</h3>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <div v-for="playlist in playlists" :key="playlist.id" class="glass-dark rounded-2xl p-4 cursor-pointer hover:scale-105 transition-all">
             <img :src="playlist.cover_url || 'https://picsum.photos/200/200?random=p' + playlist.id" class="w-full aspect-square object-cover rounded-xl mb-3" />
@@ -100,12 +100,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useMusicStore } from '@/stores/music'
 import { useNotificationStore } from '@/stores/notification'
 import api from '@/utils/api'
+import Banner from '@/components/music/Banner.vue'
+import Recommend from '@/components/music/Recommend.vue'
+import Chart from '@/components/music/Chart.vue'
+import CategoryWall from '@/components/music/CategoryWall.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -165,6 +169,33 @@ const playSong = (song) => {
   musicStore.playSong(song, songs.value)
 }
 
+const handleKeydown = (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return
+  
+  switch (e.code) {
+    case 'Space':
+      e.preventDefault()
+      musicStore.togglePlay()
+      break
+    case 'ArrowLeft':
+      e.preventDefault()
+      musicStore.prevSong()
+      break
+    case 'ArrowRight':
+      e.preventDefault()
+      musicStore.nextSong()
+      break
+    case 'ArrowUp':
+      e.preventDefault()
+      musicStore.volumeUp()
+      break
+    case 'ArrowDown':
+      e.preventDefault()
+      musicStore.volumeDown()
+      break
+  }
+}
+
 onMounted(() => {
   loadSongs()
   playlists.value = [
@@ -173,5 +204,11 @@ onMounted(() => {
     { id: 3, title: '新歌速递', description: '最新最热歌曲', cover_url: 'https://picsum.photos/200/200?random=p3' },
     { id: 4, title: '深夜电台', description: '陪你度过深夜的歌', cover_url: 'https://picsum.photos/200/200?random=p4' }
   ]
+  
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
 })
 </script>
