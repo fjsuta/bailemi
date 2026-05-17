@@ -49,6 +49,9 @@
 - **用户管理**：管理员可查询、封禁用户
 - **内容管理**：歌曲、歌单、评论管理
 - **系统配置**：第三方登录配置开关
+- **自动更新检查**：每天检查仓库更新，支持一键拉取代码
+- **图形化公安备案**：内置公安备案管理工具
+- **多云对象存储**：支持阿里云、腾讯云、七牛云、又拍云等国内主流云服务商及本地存储
 
 ---
 
@@ -72,13 +75,14 @@
 | MySQL | 关系型数据库 |
 | Redis | 缓存（可选） |
 
-### 后端技术栈（Spring Boot 可选）
-| 技术 | 说明 |
-|------|------|
-| Spring Boot | Spring 初始化框架 |
-| Spring Security | 安全框架 |
-| Spring Data JPA | ORM 持久化框架 |
-| MyBatis-Plus | MyBatis 增强工具 |
+### 对象存储支持
+- 📁 **本地存储**：服务器本地文件系统
+- ☁️ **阿里云 OSS**：阿里云对象存储
+- ☁️ **腾讯云 COS**：腾讯云对象存储
+- ☁️ **七牛云**：七牛云对象存储
+- ☁️ **又拍云**：又拍云存储
+- ☁️ **华为云 OBS**：华为云对象存储
+- ☁️ **百度云 BOS**：百度云对象存储
 
 ---
 
@@ -92,6 +96,7 @@ bailemi/
 │   │   ├── views/             # 页面视图
 │   │   │   ├── auth/          # 认证页面
 │   │   │   ├── music/         # 音乐页面
+│   │   │   ├── admin/         # 管理后台
 │   │   │   └── profile/        # 个人中心
 │   │   ├── stores/            # Pinia 状态管理
 │   │   ├── router/            # 路由配置
@@ -106,7 +111,8 @@ bailemi/
 │   │   │   ├── service/       # 业务逻辑
 │   │   │   ├── repository/    # 数据访问
 │   │   │   ├── model/         # 数据模型
-│   │   │   └── middleware/    # 中间件
+│   │   │   ├── middleware/    # 中间件
+│   │   │   └── tasks/         # 定时任务
 │   │   └── pkg/               # 公共工具包
 │   │
 │   └── frontend/              # 原生前端（可选）
@@ -225,6 +231,17 @@ go run cmd/demo/demo.go
 | GET | `/api/v1/song/hot` | 热门歌曲 |
 | GET | `/api/v1/playlist` | 歌单列表 |
 
+### 管理接口
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/v1/admin/update/check` | 检查更新 |
+| POST | `/api/v1/admin/update/do` | 执行更新 |
+| GET | `/api/v1/admin/icp` | 获取备案信息 |
+| POST | `/api/v1/admin/icp` | 设置备案信息 |
+| GET | `/api/v1/admin/storage` | 获取存储配置 |
+| POST | `/api/v1/admin/storage` | 设置存储配置 |
+
 ---
 
 ## ⚙️ 配置说明
@@ -258,6 +275,40 @@ go run cmd/demo/demo.go
 }
 ```
 
+### 存储配置
+
+在 `bailemi/gateway/config/storage.json` 中配置对象存储：
+
+```json
+{
+  "type": "local",
+  "local": {
+    "path": "./uploads"
+  },
+  "aliyun_oss": {
+    "enabled": false,
+    "access_key_id": "",
+    "access_key_secret": "",
+    "bucket": "",
+    "region": ""
+  },
+  "tencent_cos": {
+    "enabled": false,
+    "secret_id": "",
+    "secret_key": "",
+    "bucket": "",
+    "region": ""
+  },
+  "qiniu": {
+    "enabled": false,
+    "access_key": "",
+    "secret_key": "",
+    "bucket": "",
+    "domain": ""
+  }
+}
+```
+
 ### 环境变量
 
 ```env
@@ -274,6 +325,10 @@ JWT_EXPIRES_IN=7d
 
 # OAuth 配置
 OAUTH_CONFIG_PATH=./config/oauth.json
+
+# 自动更新配置
+UPDATE_CHECK_ENABLE=true
+UPDATE_REPO_URL=https://github.com/fjsuta/bailemi
 
 # 基础URL
 BASE_URL=https://your-domain.com
@@ -298,6 +353,9 @@ BASE_URL=https://your-domain.com
 | permissions | 权限表 |
 | roles | 角色表 |
 | role_permissions | 角色权限关联表 |
+| system_config | 系统配置表 |
+| icp_info | 公安备案信息表 |
+| update_logs | 更新日志表 |
 
 ---
 
@@ -382,8 +440,9 @@ mvn spring-boot:run
 ## 📬 联系与反馈
 
 - **GitHub Issues**: [提交问题](https://github.com/fjsuta/bailemi/issues)
-- **邮箱**: contact@bailemi.com
-- **社区**: [Discord](https://discord.gg/bailemi)
+- **邮箱**: replab@zohomail.cn
+- **微博**: https://weibo.com/u/7799762062
+- **软天空**: http://a.ruansky.com/user/8615546/
 
 ---
 
