@@ -252,6 +252,47 @@ func (h *UserHandler) GetFollowers(c *gin.Context) {
 	response.SuccessWithPagination(c, users, page, pageSize, total)
 }
 
+func (h *UserHandler) DeleteAccount(c *gin.Context) {
+	userID := c.GetUint64("user_id")
+
+	var req struct {
+		Password string `json:"password" binding:"required"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		errors.Error(c, 400, 10001, "请输入密码确认")
+		return
+	}
+
+	err := h.userService.DeleteAccount(c.Request.Context(), userID, req.Password)
+	if err != nil {
+		errors.Error(c, 400, 10001, err.Error())
+		return
+	}
+
+	response.Success(c, gin.H{"message": "账号已注销"})
+}
+
+func (h *UserHandler) ChangePassword(c *gin.Context) {
+	userID := c.GetUint64("user_id")
+
+	var req struct {
+		OldPassword string `json:"old_password" binding:"required"`
+		NewPassword string `json:"new_password" binding:"required"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		errors.Error(c, 400, 10001, "参数错误")
+		return
+	}
+
+	err := h.userService.ChangePassword(c.Request.Context(), userID, req.OldPassword, req.NewPassword)
+	if err != nil {
+		errors.Error(c, 400, 10001, err.Error())
+		return
+	}
+
+	response.Success(c, gin.H{"message": "密码修改成功"})
+}
+
 func parseUint64(s string, result *uint64) (bool, error) {
 	var v uint64
 	for _, c := range s {

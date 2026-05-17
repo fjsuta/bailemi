@@ -398,3 +398,38 @@ func (s *UserService) GetPublicUserProfile(ctx context.Context, userID uint64) (
 		},
 	}, nil
 }
+
+func (s *UserService) DeleteAccount(ctx context.Context, userID uint64, password string) error {
+	user, err := s.userRepo.FindByID(ctx, userID)
+	if err != nil {
+		return errors.New("用户不存在")
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password)); err != nil {
+		return errors.New("密码错误")
+	}
+
+	return s.userRepo.SoftDelete(ctx, userID)
+}
+
+func (s *UserService) ChangePassword(ctx context.Context, userID uint64, oldPassword, newPassword string) error {
+	user, err := s.userRepo.FindByID(ctx, userID)
+	if err != nil {
+		return errors.New("用户不存在")
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(oldPassword)); err != nil {
+		return errors.New("原密码错误")
+	}
+
+	if len(newPassword) < 8 {
+		return errors.New("新密码长度至少8位")
+	}
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+
+	return s.userRepo.UpdatePassword(ctx, userID, string(hashedPassword))
+}
