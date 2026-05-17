@@ -1,6 +1,13 @@
 <template>
   <div>
-    <h2 class="text-xl font-bold mb-6 text-white">💾 存储配置管理</h2>
+    <h2 class="text-xl font-bold mb-6 text-white flex items-center gap-2">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      存储配置管理
+    </h2>
 
     <div class="glass rounded-xl p-6 mb-6">
       <div class="flex items-center justify-between mb-6">
@@ -12,13 +19,13 @@
           v-model="config.type"
           class="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-white"
         >
-          <option value="local">📁 本地存储</option>
-          <option value="aliyun_oss">☁️ 阿里云 OSS</option>
-          <option value="tencent_cos">☁️ 腾讯云 COS</option>
-          <option value="qiniu">☁️ 七牛云</option>
-          <option value="upyun">☁️ 又拍云</option>
-          <option value="huawei_obs">☁️ 华为云 OBS</option>
-          <option value="baidu_bos">☁️ 百度云 BOS</option>
+          <option value="local">本地存储</option>
+          <option value="aliyun_oss">阿里云 OSS</option>
+          <option value="tencent_cos">腾讯云 COS</option>
+          <option value="qiniu">七牛云</option>
+          <option value="upyun">又拍云</option>
+          <option value="huawei_obs">华为云 OBS</option>
+          <option value="baidu_bos">百度云 BOS</option>
         </select>
       </div>
 

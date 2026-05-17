@@ -2,7 +2,11 @@
   <div class="glass-dark rounded-2xl p-6">
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">🎵</div>
+        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+        </div>
         <div>
           <h2 class="text-xl font-bold">每日推荐</h2>
           <p class="text-sm text-slate-400">{{ today }}</p>
@@ -21,7 +25,11 @@
         <div class="relative aspect-square rounded-xl overflow-hidden mb-3">
           <img :src="song.cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
           <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-            <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white text-2xl">▶</div>
+            <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </div>
           </div>
           <span v-if="song.isHot" class="absolute top-2 right-2 px-2 py-1 bg-red-500/80 rounded text-xs text-white">HOT</span>
         </div>

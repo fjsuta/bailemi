@@ -1,6 +1,12 @@
 <template>
   <div>
-    <h2 class="text-xl font-bold mb-6 text-white">🔄 自动更新管理</h2>
+    <h2 class="text-xl font-bold mb-6 text-white flex items-center gap-2">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="23 4 23 10 17 10"/>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+      </svg>
+      自动更新管理
+    </h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
       <div class="glass rounded-xl p-6">

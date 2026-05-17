@@ -5,8 +5,10 @@
         <div class="relative w-48 h-48 md:w-64 md:h-64 flex-shrink-0">
           <img :src="album.cover" class="w-full h-full object-cover rounded-2xl" />
           <div class="absolute inset-0 bg-black/30 rounded-2xl flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-            <button @click="playAlbum" class="w-16 h-16 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white text-3xl hover:bg-white/30 transition-colors">
-              ▶
+            <button @click="playAlbum" class="w-16 h-16 bg-white/20 backdrop-blur rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+              <svg class="w-7 h-7 text-white ml-1" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
             </button>
           </div>
         </div>
@@ -21,10 +23,17 @@
           <p class="text-slate-300 mb-6">{{ album.description }}</p>
           <div class="flex gap-4">
             <button class="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl font-medium hover:opacity-90">
-              ♥ 收藏专辑
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+              收藏专辑
             </button>
             <button class="px-6 py-2 bg-white/10 rounded-xl font-medium hover:bg-white/20">
-              ➤ 分享
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+              分享
             </button>
           </div>
         </div>
@@ -48,7 +57,9 @@
           >
             <div class="w-8 text-center">
               <span v-if="currentSong?.id !== song.id" class="text-slate-400">{{ index + 1 }}</span>
-              <span v-else class="text-purple-400 animate-pulse">♪</span>
+              <svg v-else class="w-4 h-4 text-purple-400 animate-pulse" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+              </svg>
             </div>
             <img :src="song.cover" class="w-10 h-10 rounded-lg object-cover" />
             <div class="flex-1 min-w-0">
@@ -57,7 +68,9 @@
             </div>
             <div class="flex items-center gap-4">
               <span class="text-sm text-slate-500">{{ song.duration }}</span>
-              <span v-if="song.isFavorite" class="text-red-500">❤️</span>
+              <svg v-if="song.isFavorite" class="w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
             </div>
           </div>
         </div>

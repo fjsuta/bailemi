@@ -51,7 +51,11 @@
             <p class="text-sm text-slate-400">{{ song.album }}</p>
           </div>
           <span class="text-slate-500 text-sm">{{ song.duration }}</span>
-          <span class="opacity-0 group-hover:opacity-100 text-white">▶</span>
+          <span class="opacity-0 group-hover:opacity-100 text-white">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          </span>
         </div>
       </div>
 
@@ -65,7 +69,9 @@
           <div class="relative aspect-square rounded-xl overflow-hidden mb-3">
             <img :src="album.cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center">
-              <span class="text-4xl">▶</span>
+              <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
             </div>
           </div>
           <h4 class="font-medium truncate">{{ album.name }}</h4>
@@ -82,7 +88,9 @@
           <div class="relative w-32 h-18 flex-shrink-0">
             <img :src="mv.cover" class="w-full h-full object-cover rounded-lg" />
             <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-xl">▶</span>
+              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
             </div>
           </div>
           <div class="flex-1">

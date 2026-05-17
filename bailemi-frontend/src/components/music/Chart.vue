@@ -2,7 +2,11 @@
   <div class="glass-dark rounded-2xl p-6">
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">🏆</div>
+        <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
         <h2 class="text-xl font-bold">排行榜</h2>
       </div>
       <button class="text-purple-400 hover:text-purple-300 transition-colors">查看全部 →</button>
@@ -20,7 +24,7 @@
             : 'bg-white/10 text-slate-300 hover:bg-white/20'
         ]"
       >
-        {{ tab.icon }} {{ tab.name }}
+        {{ tab.name }}
       </button>
     </div>
 
@@ -56,7 +60,11 @@
           </span>
           <span class="text-slate-500 text-sm">{{ song.playCount }}</span>
         </div>
-        <div class="opacity-0 group-hover:opacity-100 transition-opacity text-white">▶</div>
+        <div class="opacity-0 group-hover:opacity-100 transition-opacity text-white">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+        </div>
       </div>
     </div>
   </div>
@@ -71,10 +79,10 @@ const musicStore = useMusicStore()
 const activeTab = ref('hot')
 
 const tabs = [
-  { id: 'hot', name: '热歌榜', icon: '🔥' },
-  { id: 'new', name: '新歌榜', icon: '✨' },
-  { id: 'soar', name: '飙升榜', icon: '📈' },
-  { id: 'original', name: '原创榜', icon: '🎨' }
+  { id: 'hot', name: '热歌榜' },
+  { id: 'new', name: '新歌榜' },
+  { id: 'soar', name: '飙升榜' },
+  { id: 'original', name: '原创榜' }
 ]
 
 const charts = ref({

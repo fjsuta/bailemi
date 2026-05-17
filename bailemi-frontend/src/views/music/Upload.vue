@@ -23,7 +23,7 @@
               : 'bg-white/10 text-slate-300 hover:bg-white/20'
           ]"
         >
-          {{ tab.icon }} {{ tab.name }}
+          {{ tab.name }}
         </button>
       </div>
 
@@ -32,7 +32,13 @@
           <AudioEditor v-model="selectedFile" @export="handleAudioExport" />
           
           <div class="glass-dark rounded-xl p-6">
-            <h3 class="font-semibold text-white mb-4">📝 基本信息</h3>
+            <h3 class="font-semibold text-white mb-4 flex items-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              基本信息
+            </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm text-slate-400 mb-2">
@@ -106,8 +112,11 @@
                     <div v-if="formData.cover" class="w-20 h-20 rounded-lg overflow-hidden bg-slate-800">
                       <img :src="formData.cover" class="w-full h-full object-cover" alt="封面" />
                     </div>
-                    <div v-else class="w-20 h-20 rounded-lg bg-slate-800 flex items-center justify-center text-2xl">
-                      📷
+                    <div v-else class="w-20 h-20 rounded-lg bg-slate-800 flex items-center justify-center">
+                      <svg class="w-8 h-8 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                      </svg>
                     </div>
                     <div>
                       <p class="text-slate-300">点击上传封面图片</p>
@@ -137,7 +146,10 @@
           <div class="glass-dark rounded-xl p-6">
             <div class="flex items-center gap-3 mb-4">
               <div class="w-6 h-6 rounded bg-slate-800 flex items-center justify-center">
-                ⚙️
+                <svg class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
               </div>
               <h3 class="font-semibold text-white">高级设置</h3>
             </div>
@@ -190,7 +202,13 @@
       </div>
 
       <div v-else class="glass-dark rounded-xl p-8 text-center">
-        <div class="text-6xl mb-4">🚧</div>
+        <div class="mb-4">
+          <svg class="w-12 h-12 mx-auto text-yellow-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
         <h3 class="text-xl font-semibold text-white mb-2">专业编曲器开发中</h3>
         <p class="text-slate-400 mb-6">此功能正在开发中，敬请期待...</p>
       </div>
@@ -227,8 +245,8 @@ const formData = ref({
 })
 
 const tabs = [
-  { id: 'upload', name: '音频裁剪', icon: '✂️' },
-  { id: 'composer', name: '专业编曲', icon: '🎹' }
+  { id: 'upload', name: '音频裁剪' },
+  { id: 'composer', name: '专业编曲' }
 ]
 
 const canSubmit = computed(() => {

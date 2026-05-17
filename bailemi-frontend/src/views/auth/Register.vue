@@ -8,7 +8,11 @@
     <div class="glass-dark rounded-3xl p-8 w-full max-w-md mx-4 relative z-10">
       <div class="text-center mb-8">
         <div class="flex items-center justify-center gap-3 mb-4">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-2xl">🎵</div>
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
+            <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+          </div>
           <h1 class="text-3xl font-bold gradient-text">百米乐</h1>
         </div>
         <p class="text-slate-400">创建你的专属音乐账号</p>

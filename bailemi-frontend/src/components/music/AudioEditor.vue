@@ -2,8 +2,11 @@
   <div class="space-y-6">
     <div class="flex flex-col lg:flex-row gap-6">
       <div class="flex-1">
-        <label class="block text-sm font-medium text-slate-300 mb-3">
-          🎵 音频波形编辑器
+        <label class="block text-sm font-medium text-slate-300 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+          音频波形编辑器
         </label>
         
         <div class="glass-dark rounded-xl p-4">
@@ -17,7 +20,13 @@
               @click="togglePlay"
               class="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg font-medium flex items-center gap-2 hover:opacity-90 transition-opacity"
             >
-              <span>{{ isPlaying ? '⏸️' : '▶️' }}</span>
+              <svg v-if="isPlaying" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16"/>
+                <rect x="14" y="4" width="4" height="16"/>
+              </svg>
+              <svg v-else class="w-4 h-4 ml-0.5" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
               <span>{{ isPlaying ? '暂停' : '播放' }}</span>
             </button>
             
@@ -28,7 +37,16 @@
         </div>
 
         <div class="glass-dark rounded-xl p-4 mt-4">
-          <h4 class="font-semibold text-white mb-3">✂️ 区域选择 (可拖拽)</h4>
+          <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="6" cy="6" r="3"/>
+              <circle cx="6" cy="18" r="3"/>
+              <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+              <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+              <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+            </svg>
+            区域选择 (可拖拽)
+          </h4>
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label class="block text-xs text-slate-400 mb-1">起始时间 (秒)</label>
@@ -69,7 +87,12 @@
         </div>
 
         <div class="glass-dark rounded-xl p-4 mt-4">
-          <h4 class="font-semibold text-white mb-3">🔧 音频处理</h4>
+          <h4 class="font-semibold text-white mb-3 flex items-center gap-2">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+            音频处理
+          </h4>
           <div class="space-y-4">
             <div>
               <label class="block text-sm text-slate-400 mb-2 flex justify-between">
@@ -121,8 +144,13 @@
       </div>
 
       <div class="w-full lg:w-72">
-        <label class="block text-sm font-medium text-slate-300 mb-3">
-          📤 音频文件
+        <label class="block text-sm font-medium text-slate-300 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          音频文件
         </label>
         
         <div
@@ -142,14 +170,22 @@
           />
           
           <div v-if="!selectedFile" class="py-8">
-            <div class="text-4xl mb-3">🎶</div>
+            <div class="text-4xl mb-3">
+              <svg class="w-8 h-8 mx-auto text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18V5l12-2v13"/>
+                <circle cx="6" cy="18" r="3"/>
+                <circle cx="18" cy="16" r="3"/>
+              </svg>
+            </div>
             <p class="text-slate-300 font-medium mb-1">拖拽或点击上传</p>
             <p class="text-xs text-slate-500">支持 MP3, WAV, FLAC, OGG</p>
           </div>
           
           <div v-else class="py-4">
-            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-2xl">
-              🎵
+            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
+              <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+              </svg>
             </div>
             <p class="text-slate-300 font-medium truncate">{{ selectedFile.name }}</p>
             <p class="text-xs text-slate-500 mt-1">{{ formatFileSize(selectedFile.size) }}</p>
@@ -168,14 +204,23 @@
             :disabled="!selectedFile || !region"
             class="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
           >
-            🔊 预览裁剪
+            <svg class="w-4 h-4 inline-block mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+            预览裁剪
           </button>
           <button
             @click="exportClip"
             :disabled="!selectedFile || !region"
             class="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
           >
-            💾 导出音频
+            <svg class="w-4 h-4 inline-block mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            导出音频
           </button>
         </div>
       </div>
