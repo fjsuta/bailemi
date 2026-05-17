@@ -1,0 +1,120 @@
+version: '3.8'
+
+# =========================================
+# 百米乐音乐平台 - Docker Compose部署
+# 包含：Nginx、PHP、MySQL、Redis、Node.js
+# =========================================
+
+services:
+  # Nginx Web服务器
+  nginx:
+    image: nginx:alpine
+    container_name: bailemi-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/logs:/var/log/nginx
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - php
+      - node
+    networks:
+      - bailemi-network
+
+  # PHP-FPM服务
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: bailemi-php
+    restart: unless-stopped
+    expose:
+      - "9000"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - bailemi-network
+
+  # Node.js服务 (前端构建)
+  node:
+    image: node:18-alpine
+    container_name: bailemi-node
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    command: sh -c "npm install && npm run dev"
+    networks:
+      - bailemi-network
+    profiles: ["dev"]
+
+  # MySQL/MariaDB数据库
+  mysql:
+    image: mysql:8.0
+    container_name: bailemi-mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=bailemi_root_2024
+      - MYSQL_DATABASE=bailemi
+      - MYSQL_USER=bailemi
+      - MYSQL_PASSWORD=bailemi_2024
+      - TZ=Asia/Shanghai
+    networks:
+      - bailemi-network
+
+  # Redis缓存
+  redis:
+    image: redis:7-alpine
+    container_name: bailemi-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --requirepass bailemi_redis_2024
+    networks:
+      - bailemi-network
+
+  # phpMyAdmin (可选)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: bailemi-pma
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=bailemi
+      - PMA_PASSWORD=bailemi_2024
+    depends_on:
+      - mysql
+    networks:
+      - bailemi-network
+    profiles: ["tools"]
+
+# 数据卷
+volumes:
+  mysql-data:
+    driver: local
+  redis-data:
+    driver: local
+
+# 网络配置
+networks:
+  bailemi-network:
+    driver: bridge
