@@ -13,7 +13,8 @@
     "vue-router": "^4.3.0",
     "pinia": "^2.1.7",
     "axios": "^1.6.8",
-    "lucide-vue-next": "^0.378.0"
+    "lucide-vue-next": "^0.378.0",
+    "wavesurfer.js": "^7.7.15"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

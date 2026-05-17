@@ -41,6 +41,17 @@ const routes = [
     path: '/album/:id',
     name: 'AlbumDetail',
     component: () => import('@/views/music/AlbumDetail.vue')
+  },
+  {
+    path: '/upload',
+    name: 'Upload',
+    component: () => import('@/views/music/Upload.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/song/:id',
+    name: 'SongDetail',
+    component: () => import('@/views/music/SongDetail.vue')
   }
 ]
 

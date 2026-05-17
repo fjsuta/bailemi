@@ -8,6 +8,10 @@
         </div>
         <div class="flex items-center gap-4">
           <div v-if="authStore.isAuthenticated" class="flex items-center gap-3">
+            <router-link to="/upload" class="px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
+              <span>🎤</span>
+              <span>上传</span>
+            </router-link>
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center overflow-hidden">
               <img v-if="authStore.user?.avatar_url" :src="authStore.user.avatar_url" class="w-full h-full object-cover" />
               <span v-else>{{ authStore.user?.username?.[0]?.toUpperCase() }}</span>
