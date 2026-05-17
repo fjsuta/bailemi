@@ -78,30 +78,10 @@ const tabs = [
 ]
 
 const charts = ref({
-  hot: [
-    { id: 1, title: '早安隆回', artist: '袁树雄', cover: 'https://picsum.photos/100/100?random=c1', trend: 0, playCount: '1.2亿' },
-    { id: 2, title: '孤勇者', artist: '陈奕迅', cover: 'https://picsum.photos/100/100?random=c2', trend: -1, playCount: '9800万' },
-    { id: 3, title: '本草纲目', artist: '周杰伦', cover: 'https://picsum.photos/100/100?random=c3', trend: 2, playCount: '8600万' },
-    { id: 4, title: '起风了', artist: '买辣椒也用券', cover: 'https://picsum.photos/100/100?random=c4', trend: -2, playCount: '7500万' },
-    { id: 5, title: '世界那么大还是遇见你', artist: '程响', cover: 'https://picsum.photos/100/100?random=c5', trend: 1, playCount: '6800万' },
-    { id: 6, title: '可可托海的牧羊人', artist: '王琪', cover: 'https://picsum.photos/100/100?random=c6', trend: 3, playCount: '6200万' },
-    { id: 7, title: '听闻远方有你', artist: '刘艺雯', cover: 'https://picsum.photos/100/100?random=c7', trend: -1, playCount: '5800万' },
-    { id: 8, title: '踏山河', artist: '七叔（叶泽浩）', cover: 'https://picsum.photos/100/100?random=c8', trend: 0, playCount: '5400万' }
-  ],
-  new: [
-    { id: 11, title: '最伟大的作品', artist: '周杰伦', cover: 'https://picsum.photos/100/100?random=n1', trend: 1, playCount: '5200万' },
-    { id: 12, title: '还在流浪', artist: '周杰伦', cover: 'https://picsum.photos/100/100?random=n2', trend: 2, playCount: '4800万' },
-    { id: 13, title: '红颜如霜', artist: '周杰伦', cover: 'https://picsum.photos/100/100?random=n3', trend: 3, playCount: '4500万' }
-  ],
-  soar: [
-    { id: 21, title: '太想念', artist: '豆包', cover: 'https://picsum.photos/100/100?random=s1', trend: 12, playCount: '3200万' },
-    { id: 22, title: '我曾遇到一束光', artist: '叶斯淳', cover: 'https://picsum.photos/100/100?random=s2', trend: 8, playCount: '2800万' },
-    { id: 23, title: '一路生花', artist: '温奕心', cover: 'https://picsum.photos/100/100?random=s3', trend: 6, playCount: '2500万' }
-  ],
-  original: [
-    { id: 31, title: '入海', artist: '毛不易', cover: 'https://picsum.photos/100/100?random=o1', trend: 2, playCount: '1800万' },
-    { id: 32, title: '消愁', artist: '毛不易', cover: 'https://picsum.photos/100/100?random=o2', trend: 1, playCount: '1500万' }
-  ]
+  hot: [],
+  new: [],
+  soar: [],
+  original: []
 })
 
 const currentChart = computed(() => charts.value[activeTab.value] || charts.value.hot)

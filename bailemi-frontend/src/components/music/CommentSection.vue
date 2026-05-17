@@ -90,49 +90,7 @@ import { ref } from 'vue'
 
 const newComment = ref('')
 
-const comments = ref([
-  {
-    id: 1,
-    username: '音乐爱好者',
-    avatar: 'https://picsum.photos/48/48?random=c1',
-    time: '2小时前',
-    content: '这首歌真的太好听了！循环播放一整天',
-    likes: 128,
-    liked: false,
-    showReply: false,
-    replyText: '',
-    replies: [
-      { id: 1, username: '周杰伦粉丝', avatar: 'https://picsum.photos/32/32?random=r1', content: '同感！Jay的歌永远听不腻' }
-    ]
-  },
-  {
-    id: 2,
-    username: '路人甲',
-    avatar: 'https://picsum.photos/48/48?random=c2',
-    time: '5小时前',
-    content: '第一次听就爱上了，单曲循环中',
-    likes: 64,
-    liked: true,
-    showReply: false,
-    replyText: '',
-    replies: []
-  },
-  {
-    id: 3,
-    username: '老歌迷',
-    avatar: 'https://picsum.photos/48/48?random=c3',
-    time: '昨天',
-    content: '从第一张专辑追到现在，杰伦永远的神！',
-    likes: 256,
-    liked: false,
-    showReply: false,
-    replyText: '',
-    replies: [
-      { id: 2, username: '新歌迷', avatar: 'https://picsum.photos/32/32?random=r2', content: '+1，老粉报到' },
-      { id: 3, username: '路人乙', avatar: 'https://picsum.photos/32/32?random=r3', content: '同老粉，十年了' }
-    ]
-  }
-])
+const comments = ref([])
 
 const submitComment = () => {
   if (!newComment.value.trim()) return

@@ -28,7 +28,7 @@
 
       <div class="text-center py-8 mb-8">
         <h2 class="text-4xl md:text-5xl font-bold gradient-text mb-4">发现好音乐，感受美好</h2>
-        <p class="text-slate-400 text-lg mb-8">百万首歌曲，随时随地，想听就听</p>
+        <p class="text-slate-400 text-lg mb-8">上传原创音乐，分享美好声音</p>
         
         <!-- 搜索框 -->
         <div class="max-w-2xl mx-auto">
@@ -159,13 +159,7 @@ const loadSongs = async () => {
     }
   } catch (error) {
     console.error(error)
-    songs.value = [
-      { id: 1, title: '双截棍', artist: '周杰伦', cover_url: 'https://picsum.photos/200/200?random=1' },
-      { id: 2, title: '简单爱', artist: '周杰伦', cover_url: 'https://picsum.photos/200/200?random=2' },
-      { id: 3, title: '晴天', artist: '周杰伦', cover_url: 'https://picsum.photos/200/200?random=3' },
-      { id: 4, title: '七里香', artist: '周杰伦', cover_url: 'https://picsum.photos/200/200?random=4' },
-      { id: 5, title: '稻香', artist: '周杰伦', cover_url: 'https://picsum.photos/200/200?random=5' }
-    ]
+    songs.value = []
   }
 }
 
@@ -202,12 +196,7 @@ const handleKeydown = (e) => {
 
 onMounted(() => {
   loadSongs()
-  playlists.value = [
-    { id: 1, title: '华语流行精选', description: '精选华语流行歌曲', cover_url: 'https://picsum.photos/200/200?random=p1' },
-    { id: 2, title: '经典老歌回忆', description: '经典老歌回忆杀', cover_url: 'https://picsum.photos/200/200?random=p2' },
-    { id: 3, title: '新歌速递', description: '最新最热歌曲', cover_url: 'https://picsum.photos/200/200?random=p3' },
-    { id: 4, title: '深夜电台', description: '陪你度过深夜的歌', cover_url: 'https://picsum.photos/200/200?random=p4' }
-  ]
+  playlists.value = []
   
   window.addEventListener('keydown', handleKeydown)
 })

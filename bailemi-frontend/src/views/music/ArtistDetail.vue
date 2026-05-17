@@ -111,31 +111,16 @@ const tabs = [
 
 const artist = ref({
   id: 1,
-  name: '周杰伦',
+  name: '',
   avatar: 'https://picsum.photos/150/150?random=artist1',
   cover: 'https://picsum.photos/1200/400?random=cover1',
-  description: '华语乐坛天王，创作型歌手',
-  fans: '3200万',
-  songs: '156',
-  albums: '15',
-  songsList: [
-    { id: 1, title: '晴天', album: '叶惠美', duration: '4:29', cover: 'https://picsum.photos/100/100?random=s1' },
-    { id: 2, title: '夜曲', album: '十一月的萧邦', duration: '4:23', cover: 'https://picsum.photos/100/100?random=s2' },
-    { id: 3, title: '七里香', album: '七里香', duration: '4:59', cover: 'https://picsum.photos/100/100?random=s3' },
-    { id: 4, title: '稻香', album: '魔杰座', duration: '3:43', cover: 'https://picsum.photos/100/100?random=s4' },
-    { id: 5, title: '双截棍', album: '范特西', duration: '3:21', cover: 'https://picsum.photos/100/100?random=s5' }
-  ],
-  albumsList: [
-    { id: 1, name: '最伟大的作品', cover: 'https://picsum.photos/200/200?random=a1', year: '2022', songs: 12 },
-    { id: 2, name: '周杰伦的床边故事', cover: 'https://picsum.photos/200/200?random=a2', year: '2016', songs: 10 },
-    { id: 3, name: '哎哟，不错哦', cover: 'https://picsum.photos/200/200?random=a3', year: '2014', songs: 12 },
-    { id: 4, name: '十二新作', cover: 'https://picsum.photos/200/200?random=a4', year: '2012', songs: 12 }
-  ],
-  mvs: [
-    { id: 1, title: '最伟大的作品', cover: 'https://picsum.photos/200/100?random=m1', views: '5200万', year: '2022' },
-    { id: 2, title: '说好不哭', cover: 'https://picsum.photos/200/100?random=m2', views: '8900万', year: '2019' },
-    { id: 3, title: '告白气球', cover: 'https://picsum.photos/200/100?random=m3', views: '1.2亿', year: '2016' }
-  ]
+  description: '',
+  fans: '',
+  songs: '',
+  albums: '',
+  songsList: [],
+  albumsList: [],
+  mvs: []
 })
 
 const playSong = (song) => {

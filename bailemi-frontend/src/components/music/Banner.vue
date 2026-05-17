@@ -65,35 +65,27 @@ let timer = null
 const banners = ref([
   {
     id: 1,
-    title: '周杰伦新专辑首发',
-    description: '时隔三年，周杰伦全新专辑《最伟大的作品》震撼发布',
-    tag: '新专辑',
+    title: '发现好音乐',
+    description: '分享您的原创作品，发现更多精彩内容',
+    tag: '推荐',
     image: 'https://picsum.photos/1200/500?random=1',
-    buttonText: '立即收听'
+    buttonText: '立即探索'
   },
   {
     id: 2,
-    title: '夏日清凉歌单',
-    description: '精选50首适合夏天听的清凉歌曲',
-    tag: '歌单推荐',
+    title: '热门分类',
+    description: '按流派和场景快速找到喜欢的内容',
+    tag: '分类',
     image: 'https://picsum.photos/1200/500?random=2',
-    buttonText: '查看歌单'
+    buttonText: '查看分类'
   },
   {
     id: 3,
-    title: '会员专属福利',
-    description: '开通会员，畅享无损音质和专属内容',
-    tag: 'VIP',
+    title: '上传您的作品',
+    description: '分享您的创作，支持多种音频格式',
+    tag: '创作',
     image: 'https://picsum.photos/1200/500?random=3',
-    buttonText: '开通会员'
-  },
-  {
-    id: 4,
-    title: '热门演唱会',
-    description: '2024年度最值得期待的演唱会盘点',
-    tag: '活动',
-    image: 'https://picsum.photos/1200/500?random=4',
-    buttonText: '了解详情'
+    buttonText: '开始上传'
   }
 ])
 

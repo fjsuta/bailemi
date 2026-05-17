@@ -43,14 +43,7 @@ const today = computed(() => {
   return `${now.getMonth() + 1}月${now.getDate()}日 为你推荐`
 })
 
-const recommendedSongs = ref([
-  { id: 1, title: '晴天', artist: '周杰伦', cover: 'https://picsum.photos/200/200?random=r1', isHot: true },
-  { id: 2, title: '稻香', artist: '周杰伦', cover: 'https://picsum.photos/200/200?random=r2', isHot: false },
-  { id: 3, title: '夜曲', artist: '周杰伦', cover: 'https://picsum.photos/200/200?random=r3', isHot: true },
-  { id: 4, title: '双截棍', artist: '周杰伦', cover: 'https://picsum.photos/200/200?random=r4', isHot: false },
-  { id: 5, title: '七里香', artist: '周杰伦', cover: 'https://picsum.photos/200/200?random=r5', isHot: false },
-  { id: 6, title: '简单爱', artist: '周杰伦', cover: 'https://picsum.photos/200/200?random=r6', isHot: true }
-])
+const recommendedSongs = ref([])
 
 const playSong = (song) => {
   musicStore.playSong(song, recommendedSongs.value)

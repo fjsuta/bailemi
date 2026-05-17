@@ -157,57 +157,23 @@ const isLiked = ref(false)
 
 const song = ref({
   id: 1,
-  title: '音乐标题示例',
-  artist: '创作者名称',
-  album: '专辑名称',
-  genre: 'pop',
-  duration: '3:45',
+  title: '',
+  artist: '',
+  album: '',
+  genre: '',
+  duration: '',
   cover: 'https://picsum.photos/400/400?random=1',
-  description: '这是一首很棒的原创音乐，采用现代流行风格，融合了电子和古典元素。希望你会喜欢！',
+  description: '',
   license: 'cc-by',
-  views: 12345,
-  likes: 678,
+  views: 0,
+  likes: 0,
   isPublic: true,
   allowDownload: true
 })
 
-const comments = ref([
-  {
-    id: 1,
-    username: '聆听者1号',
-    avatar: 'https://picsum.photos/48/48?random=c1',
-    content: '非常好听！编曲很棒！',
-    likes: 42,
-    liked: false,
-    time: '2小时前'
-  },
-  {
-    id: 2,
-    username: '音乐爱好者',
-    avatar: 'https://picsum.photos/48/48?random=c2',
-    content: '创作力太强了，支持支持！',
-    likes: 15,
-    liked: false,
-    time: '5小时前'
-  }
-])
+const comments = ref([])
 
-const relatedSongs = ref([
-  {
-    id: 2,
-    title: '另一首好歌',
-    artist: '同一位创作者',
-    cover: 'https://picsum.photos/100/100?random=r1',
-    duration: '4:12'
-  },
-  {
-    id: 3,
-    title: '怀旧曲目',
-    artist: '另一位艺术家',
-    cover: 'https://picsum.photos/100/100?random=r2',
-    duration: '3:25'
-  }
-])
+const relatedSongs = ref([])
 
 const licenseData = computed(() => {
   const data = {
