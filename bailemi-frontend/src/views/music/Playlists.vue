@@ -3,7 +3,7 @@
     <!-- 侧边栏 -->
     <Sidebar />
     
-    <div class="pl-20 md:pl-72 transition-all duration-300">
+    <div :style="{ paddingLeft: sidebarStore.width + 'px', transition: 'padding-left 0.15s ease-out' }">
       <div class="container mx-auto px-4 py-6">
         <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center">
           <h1 class="text-3xl font-bold gradient-text mb-4">歌单</h1>
@@ -16,6 +16,9 @@
 
 <script setup>
 import Sidebar from '@/components/Sidebar.vue'
+import { useSidebarStore } from '@/stores/sidebar'
+
+const sidebarStore = useSidebarStore()
 </script>
 
 <style scoped>

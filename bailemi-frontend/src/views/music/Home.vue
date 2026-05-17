@@ -3,7 +3,7 @@
     <!-- 侧边栏 -->
     <Sidebar />
     
-    <div class="pl-20 md:pl-72 transition-all duration-300">
+    <div :style="{ paddingLeft: sidebarStore.width + 'px', transition: 'padding-left 0.15s ease-out' }">
       <div class="container mx-auto px-4 pt-6">
         <!-- 顶部操作栏 -->
         <div class="flex items-center justify-end mb-8">
@@ -128,11 +128,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useMusicStore } from '@/stores/music'
 import { useNotificationStore } from '@/stores/notification'
+import { useSidebarStore } from '@/stores/sidebar'
 import api from '@/utils/api'
 import Sidebar from '@/components/Sidebar.vue'
 import Banner from '@/components/music/Banner.vue'

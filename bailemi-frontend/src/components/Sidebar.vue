@@ -1,18 +1,18 @@
 <template>
-  <div class="fixed top-0 left-0 h-full z-40 transition-all duration-300 ease-in-out flex">
+  <div 
+    class="fixed top-0 left-0 h-full z-40 flex"
+    :style="{ width: sidebarStore.width + 'px', transition: 'width 0.15s ease-out' }"
+  >
     <!-- 侧边栏主体 -->
-    <div 
-      class="h-full flex flex-col bg-white/10 backdrop-blur-md border-r border-white/20"
-      :class="sidebarOpen ? 'w-72' : 'w-20'"
-    >
+    <div class="h-full flex flex-col bg-white/10 backdrop-blur-md border-r border-white/20">
       <!-- 折叠按钮 -->
       <button 
-        @click="sidebarOpen = !sidebarOpen"
+        @click="sidebarStore.toggle"
         class="absolute right-0 top-24 translate-x-1/2 w-8 h-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-all z-50"
       >
         <svg 
-          class="w-5 h-5 text-slate-300 transition-transform"
-          :class="sidebarOpen ? 'rotate-180' : ''"
+          class="w-5 h-5 text-slate-300"
+          :style="{ transform: sidebarStore.isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.15s ease-out' }"
           viewBox="0 0 24 24" 
           fill="none" 
           stroke="currentColor" 
@@ -30,7 +30,10 @@
               <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
             </svg>
           </div>
-          <div v-if="sidebarOpen" class="flex-1 min-w-0">
+          <div 
+            v-show="sidebarStore.isOpen" 
+            class="flex-1 min-w-0"
+          >
             <h1 class="text-lg font-bold gradient-text truncate">百米乐</h1>
             <p class="text-xs text-slate-400 truncate">发现好音乐，感受美好</p>
           </div>
@@ -43,11 +46,14 @@
           v-for="item in navItems" 
           :key="item.path"
           :to="item.path"
-          class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/15 transition-all group"
+          class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/15 transition-all"
           :class="{ 'bg-white/20': $route.path === item.path }"
         >
-          <span v-html="item.icon" class="w-6 h-6 flex-shrink-0 text-slate-300 group-hover:text-white"></span>
-          <span v-if="sidebarOpen" class="text-sm text-slate-300 group-hover:text-white font-medium">
+          <span v-html="item.icon" class="w-6 h-6 flex-shrink-0 text-slate-300"></span>
+          <span 
+            v-show="sidebarStore.isOpen" 
+            class="text-sm text-slate-300 font-medium"
+          >
             {{ item.name }}
           </span>
         </router-link>
@@ -62,7 +68,10 @@
               <path d="M12 14c3.866 0 7-1.892 7-4.231C19 7.423 15.866 5.5 12 5.5S5 7.423 5 9.769C5 12.108 8.134 14 12 14z"/>
             </svg>
           </div>
-          <div v-if="sidebarOpen" class="flex-1 min-w-0">
+          <div 
+            v-show="sidebarStore.isOpen" 
+            class="flex-1 min-w-0"
+          >
             <p class="text-sm font-medium text-white truncate">访客</p>
             <p class="text-xs text-slate-400 truncate">未登录</p>
           </div>
@@ -73,11 +82,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useSidebarStore } from '@/stores/sidebar'
 
 const route = useRoute()
-const sidebarOpen = ref(true)
+const sidebarStore = useSidebarStore()
 
 const navItems = computed(() => [
   { name: '首页', path: '/', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7"/><path d="M9 22V9"/><path d="M15 22V9"/></svg>' },
