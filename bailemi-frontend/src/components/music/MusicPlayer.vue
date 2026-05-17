@@ -16,23 +16,53 @@
         </div>
 
         <div class="flex items-center gap-4">
-          <button @click="musicStore.playPrevious" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-white text-2xl">
-            ⏮️
+          <button @click="musicStore.playPrevious" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-white">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="19 20 9 12 19 4 19 20"/>
+              <polygon points="5 20 15 12 5 4 5 20"/>
+            </svg>
           </button>
           <button
             @click="togglePlay"
-            class="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-2xl hover:from-purple-500 hover:to-blue-500 transition-all"
+            class="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center hover:from-purple-500 hover:to-blue-500 transition-all"
           >
-            {{ musicStore.isPlaying ? '⏸️' : '▶️' }}
+            <svg v-if="musicStore.isPlaying" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16"/>
+              <rect x="14" y="4" width="4" height="16"/>
+            </svg>
+            <svg v-else class="w-6 h-6 text-white ml-1" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
           </button>
-          <button @click="musicStore.playNext" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-white text-2xl">
-            ⏭️
+          <button @click="musicStore.playNext" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-white">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 4 15 12 5 20 5 4"/>
+              <polygon points="19 4 9 12 19 20 19 4"/>
+            </svg>
           </button>
-          <button @click="toggleRepeat" :class="['w-10 h-10 flex items-center justify-center text-xl transition-colors', musicStore.repeatMode !== 'off' ? 'text-purple-400' : 'text-slate-400 hover:text-white']">
-            {{ repeatIcon }}
+          <button @click="toggleRepeat" :class="['w-10 h-10 flex items-center justify-center transition-colors', musicStore.repeatMode !== 'off' ? 'text-purple-400' : 'text-slate-400 hover:text-white']">
+            <svg v-if="musicStore.repeatMode === 'one'" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 16a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <svg v-else-if="musicStore.repeatMode === 'all'" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 16a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+            </svg>
+            <svg v-else class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 16a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+            </svg>
           </button>
-          <button @click="toggleShuffle" :class="['w-10 h-10 flex items-center justify-center text-xl transition-colors', musicStore.isShuffled ? 'text-purple-400' : 'text-slate-400 hover:text-white']">
-            🔀
+          <button @click="toggleShuffle" :class="['w-10 h-10 flex items-center justify-center transition-colors', musicStore.isShuffled ? 'text-purple-400' : 'text-slate-400 hover:text-white']">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 3h5v5"/>
+              <path d="M4 20 21 3"/>
+              <path d="M21 16v5h-5"/>
+              <path d="M15 15l6 6"/>
+              <path d="M4 4l5 5"/>
+            </svg>
           </button>
         </div>
 
@@ -41,7 +71,11 @@
           <span>/</span>
           <span>{{ formatTime(duration) }}</span>
           <div class="flex items-center gap-2 ml-4">
-            <span>🔊</span>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
             <input type="range" min="0" max="100" :value="volume" @input="changeVolume" class="w-20 accent-purple-500" />
           </div>
         </div>
@@ -72,13 +106,7 @@ const bufferedPercent = computed(() => {
  return '0%';
  return `${(buffered.value / duration.value) * 100}%`;
 });
-const repeatIcon = computed(() => {
- switch (musicStore.repeatMode) {
- case 'one': return '🔂';
- case 'all': return '🔁';
- default: return '🔄';
- }
-});
+
 const getArtistName = () => {
  const artist = musicStore.currentSong?.artist;
  if (typeof artist === 'string')

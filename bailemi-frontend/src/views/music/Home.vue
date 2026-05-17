@@ -3,13 +3,20 @@
     <div class="container mx-auto px-4 pt-6">
       <header class="flex items-center justify-between mb-8">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-2xl">🎵</div>
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-2xl">
+            <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+          </div>
           <h1 class="text-2xl font-bold gradient-text">百米乐</h1>
         </div>
         <div class="flex items-center gap-4">
           <div v-if="authStore.isAuthenticated" class="flex items-center gap-3">
             <router-link to="/upload" class="px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
-              <span>🎤</span>
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 19V5"/>
+                <path d="M5 12l7-7 7 7"/>
+              </svg>
               <span>上传</span>
             </router-link>
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center overflow-hidden">
@@ -23,50 +30,74 @@
             <router-link to="/login" class="text-slate-300 hover:text-white">登录</router-link>
             <router-link to="/register" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl hover:from-purple-500 hover:to-blue-500 transition-all">注册</router-link>
           </div>
+          
+          <button @click="openSearch" class="p-2 hover:bg-white/10 rounded-lg transition-colors" title="搜索">
+            <svg class="w-6 h-6 text-slate-300 hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </button>
         </div>
       </header>
 
       <div class="text-center py-8 mb-8">
         <h2 class="text-4xl md:text-5xl font-bold gradient-text mb-4">发现好音乐，感受美好</h2>
-        <p class="text-slate-400 text-lg mb-8">上传原创音乐，分享美好声音</p>
-        
-        <!-- 搜索框 -->
-        <div class="max-w-2xl mx-auto">
-          <div class="relative">
-            <input
-              v-model="searchQuery"
-              @keyup.enter="handleSearch"
-              type="text"
-              placeholder="搜索歌曲、歌手、歌单..."
-              class="w-full px-6 py-4 bg-white/10 dark:bg-slate-800/50 border border-white/20 rounded-full focus:outline-none focus:border-purple-500 text-white placeholder-slate-400"
-            />
-            <button
-              @click="handleSearch"
-              class="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full hover:from-purple-500 hover:to-blue-500 transition-all"
-            >
-              🔍 搜索
+        <p class="text-slate-400 text-lg">上传原创音乐，分享美好声音</p>
+      </div>
+
+      <Teleport to="body">
+        <div v-if="showSearch" class="fixed inset-0 z-50 flex items-start justify-center pt-24">
+          <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showSearch = false"></div>
+          <div class="relative w-full max-w-2xl mx-4 glass-dark rounded-2xl p-4 shadow-2xl">
+            <button @click="showSearch = false" class="absolute top-3 right-3 p-1 hover:bg-white/10 rounded-lg transition-colors">
+              <svg class="w-5 h-5 text-slate-400 hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18"/>
+                <path d="m6 6 12 12"/>
+              </svg>
             </button>
-          </div>
-          
-          <!-- 搜索结果 -->
-          <div v-if="searchResults.length > 0" class="mt-4 glass-dark rounded-2xl p-4 max-h-96 overflow-y-auto">
-            <h4 class="font-semibold mb-3">搜索结果</h4>
-            <div
-              v-for="song in searchResults"
-              :key="song.id"
-              @click="playSong(song)"
-              class="flex items-center gap-3 p-3 hover:bg-white/10 rounded-lg cursor-pointer transition-all"
-            >
-              <img :src="song.cover_url || 'https://picsum.photos/56/56?random=' + song.id" class="w-12 h-12 rounded-lg object-cover" />
-              <div class="flex-1">
-                <h5 class="font-medium">{{ song.title }}</h5>
-                <p class="text-sm text-slate-400">{{ typeof song.artist === 'string' ? song.artist : song.artist?.name }}</p>
+            <div class="relative">
+              <input
+                v-model="searchQuery"
+                @keyup.enter="handleSearch"
+                type="text"
+                placeholder="搜索歌曲、歌手、歌单..."
+                class="w-full px-6 py-4 bg-white/10 dark:bg-slate-800/50 border border-white/20 rounded-full focus:outline-none focus:border-purple-500 text-white placeholder-slate-400"
+                ref="searchInput"
+              />
+              <button
+                @click="handleSearch"
+                class="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full hover:from-purple-500 hover:to-blue-500 transition-all"
+              >
+                <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.35-4.35"/>
+                </svg>
+              </button>
+            </div>
+            
+            <div v-if="searchResults.length > 0" class="mt-4 max-h-96 overflow-y-auto">
+              <h4 class="font-semibold mb-3">搜索结果</h4>
+              <div
+                v-for="song in searchResults"
+                :key="song.id"
+                @click="playSong(song)"
+                class="flex items-center gap-3 p-3 hover:bg-white/10 rounded-lg cursor-pointer transition-all"
+              >
+                <img :src="song.cover_url || 'https://picsum.photos/56/56?random=' + song.id" class="w-12 h-12 rounded-lg object-cover" />
+                <div class="flex-1">
+                  <h5 class="font-medium">{{ song.title }}</h5>
+                  <p class="text-sm text-slate-400">{{ typeof song.artist === 'string' ? song.artist : song.artist?.name }}</p>
+                </div>
+                <button class="p-2 bg-purple-600 rounded-full hover:bg-purple-500 transition-colors">
+                  <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5,3 19,12 5,21 5,3"/>
+                  </svg>
+                </button>
               </div>
-              <button class="px-3 py-1 bg-purple-600 rounded-full text-sm hover:bg-purple-500">▶</button>
             </div>
           </div>
         </div>
-      </div>
+      </Teleport>
 
       <!-- 轮播图 -->
       <section class="mb-12">
@@ -124,6 +155,8 @@ const searchQuery = ref('')
 const searchResults = ref([])
 const songs = ref([])
 const playlists = ref([])
+const showSearch = ref(false)
+const searchInput = ref(null)
 
 const handleSearch = async () => {
   if (!searchQuery.value.trim()) {
@@ -143,6 +176,13 @@ const handleSearch = async () => {
     console.error(error)
     notificationStore.error('搜索失败', '请稍后重试')
   }
+}
+
+const openSearch = () => {
+  showSearch.value = true
+  setTimeout(() => {
+    searchInput.value?.focus()
+  }, 100)
 }
 
 const handleLogout = () => {
