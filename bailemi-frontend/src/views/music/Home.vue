@@ -8,7 +8,10 @@
               <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
             </svg>
           </div>
-          <h1 class="text-2xl font-bold gradient-text">百米乐</h1>
+          <div class="flex flex-col">
+            <h1 class="text-2xl font-bold gradient-text">百米乐</h1>
+            <span class="text-xs text-slate-400">发现好音乐，感受美好</span>
+          </div>
         </div>
         <div class="flex items-center gap-4">
           <div v-if="authStore.isAuthenticated" class="flex items-center gap-3">
@@ -39,11 +42,6 @@
           </button>
         </div>
       </header>
-
-      <div class="text-center py-8 mb-8">
-        <h2 class="text-4xl md:text-5xl font-bold gradient-text mb-4">发现好音乐，感受美好</h2>
-        <p class="text-slate-400 text-lg">上传原创音乐，分享美好声音</p>
-      </div>
 
       <Teleport to="body">
         <div v-if="showSearch" class="fixed inset-0 z-50 flex items-start justify-center pt-24">
