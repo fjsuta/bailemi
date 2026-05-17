@@ -145,6 +145,7 @@ const router = useRouter()
 const authStore = useAuthStore()
 const musicStore = useMusicStore()
 const notificationStore = useNotificationStore()
+const sidebarStore = useSidebarStore()
 
 const searchQuery = ref('')
 const searchResults = ref([])
