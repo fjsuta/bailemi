@@ -3,7 +3,11 @@
     <!-- 侧边栏 -->
     <Sidebar />
     
-    <div :style="{ paddingLeft: sidebarStore.width + 'px', transition: 'padding-left 0.15s ease-out' }">
+    <div 
+      :style="sidebarStore.layout === 'left' 
+        ? { paddingLeft: sidebarStore.width + 'px', paddingTop: '0', transition: 'padding-left 0.15s ease-out, padding-top 0.15s ease-out' }
+        : { paddingLeft: '0', paddingTop: sidebarStore.height + 'px', transition: 'padding-left 0.15s ease-out, padding-top 0.15s ease-out' }"
+    >
       <div class="container mx-auto px-4 pt-6">
         <!-- 顶部操作栏 -->
         <div class="flex items-center justify-end mb-8">
@@ -113,12 +117,14 @@
 
         <!-- 热门歌单 -->
         <section class="mb-12">
-          <h3 class="text-2xl font-bold mb-6">热门歌单</h3>
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div v-for="playlist in playlists" :key="playlist.id" class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 cursor-pointer hover:bg-white/15 transition-all hover:scale-105">
-              <img :src="playlist.cover_url || 'https://picsum.photos/200/200?random=p' + playlist.id" class="w-full aspect-square object-cover rounded-xl mb-3" />
-              <h4 class="font-semibold truncate">{{ playlist.title }}</h4>
-              <p class="text-slate-400 text-sm">{{ playlist.description }}</p>
+          <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
+            <h3 class="text-2xl font-bold mb-6">热门歌单</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div v-for="playlist in playlists" :key="playlist.id" class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 cursor-pointer hover:bg-white/10 transition-all hover:scale-105">
+                <img :src="playlist.cover_url || 'https://picsum.photos/200/200?random=p' + playlist.id" class="w-full aspect-square object-cover rounded-xl mb-3" />
+                <h4 class="font-semibold truncate">{{ playlist.title }}</h4>
+                <p class="text-slate-400 text-sm">{{ playlist.description }}</p>
+              </div>
             </div>
           </div>
         </section>

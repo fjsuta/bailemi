@@ -3,7 +3,11 @@
     <!-- 侧边栏 -->
     <Sidebar />
     
-    <div :style="{ paddingLeft: sidebarStore.width + 'px', transition: 'padding-left 0.15s ease-out' }">
+    <div 
+      :style="sidebarStore.layout === 'left' 
+        ? { paddingLeft: sidebarStore.width + 'px', paddingTop: '0', transition: 'padding-left 0.15s ease-out, padding-top 0.15s ease-out' }
+        : { paddingLeft: '0', paddingTop: sidebarStore.height + 'px', transition: 'padding-left 0.15s ease-out, padding-top 0.15s ease-out' }"
+    >
       <div class="container mx-auto px-4 py-6">
         <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center">
           <h1 class="text-3xl font-bold gradient-text mb-4">排行榜</h1>

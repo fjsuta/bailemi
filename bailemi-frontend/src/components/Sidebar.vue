@@ -1,5 +1,7 @@
 <template>
+  <!-- 左侧布局 -->
   <div 
+    v-if="sidebarStore.layout === 'left'"
     class="fixed top-0 left-0 h-full z-40 flex"
     :style="{ width: sidebarStore.width + 'px', transition: 'width 0.15s ease-out' }"
   >
@@ -60,7 +62,25 @@
       </nav>
 
       <!-- 底部区域 -->
-      <div class="p-3 border-t border-white/10">
+      <div class="p-3 border-t border-white/10 space-y-2">
+        <!-- 设置按钮 -->
+        <button 
+          @click="openSettings"
+          class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/15 transition-all w-full"
+        >
+          <svg class="w-6 h-6 flex-shrink-0 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <span 
+            v-show="sidebarStore.isOpen" 
+            class="text-sm text-slate-300 font-medium"
+          >
+            设置
+          </span>
+        </button>
+
+        <!-- 用户信息 -->
         <div class="flex items-center gap-3 px-4 py-3">
           <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center flex-shrink-0 overflow-hidden">
             <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -79,15 +99,90 @@
       </div>
     </div>
   </div>
+
+  <!-- 顶部布局 -->
+  <div 
+    v-else
+    class="fixed top-0 left-0 right-0 z-40"
+    :style="{ height: sidebarStore.height + 'px', transition: 'height 0.15s ease-out' }"
+  >
+    <!-- 导航栏主体 -->
+    <div class="h-full bg-white/10 backdrop-blur-md border-b border-white/20 flex items-center px-4">
+      <!-- Logo 区域 -->
+      <div class="flex items-center gap-3 mr-8">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+          </svg>
+        </div>
+        <div v-show="sidebarStore.isOpen" class="min-w-0">
+          <h1 class="text-lg font-bold gradient-text">百米乐</h1>
+        </div>
+      </div>
+
+      <!-- 导航项 - 可横向滚动 -->
+      <nav class="flex-1 flex items-center gap-2 overflow-x-auto py-2 scrollbar-hide">
+        <router-link 
+          v-for="item in navItems" 
+          :key="item.path"
+          :to="item.path"
+          class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/5 hover:bg-white/15 transition-all flex-shrink-0"
+          :class="{ 'bg-white/20': $route.path === item.path }"
+        >
+          <span v-html="item.icon" class="w-5 h-5 flex-shrink-0 text-slate-300"></span>
+          <span 
+            v-show="sidebarStore.isOpen" 
+            class="text-sm text-slate-300 font-medium whitespace-nowrap"
+          >
+            {{ item.name }}
+          </span>
+        </router-link>
+      </nav>
+
+      <!-- 右侧按钮区域 -->
+      <div class="flex items-center gap-2 ml-4">
+        <!-- 设置按钮 -->
+        <button 
+          @click="openSettings"
+          class="p-3 rounded-2xl bg-white/5 hover:bg-white/15 transition-all"
+          title="设置"
+        >
+          <svg class="w-6 h-6 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+
+        <!-- 折叠按钮 -->
+        <button 
+          @click="sidebarStore.toggle"
+          class="p-3 rounded-2xl bg-white/5 hover:bg-white/15 transition-all"
+          title="收起/展开"
+        >
+          <svg 
+            class="w-6 h-6 text-slate-300"
+            :style="{ transform: sidebarStore.isOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.15s ease-out' }"
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2"
+          >
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useSidebarStore } from '@/stores/sidebar'
 
 const route = useRoute()
 const sidebarStore = useSidebarStore()
+const settingsRef = ref(null)
 
 const navItems = computed(() => [
   { 
@@ -116,6 +211,12 @@ const navItems = computed(() => [
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' 
   }
 ])
+
+const openSettings = () => {
+  if (window.openSettings) {
+    window.openSettings()
+  }
+}
 </script>
 
 <style scoped>
@@ -124,5 +225,14 @@ const navItems = computed(() => [
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 </style>
