@@ -14,5 +14,6 @@ app.use(router)
 import { useThemeStore } from '@/stores/theme'
 const themeStore = useThemeStore()
 themeStore.initTheme()
+themeStore.applyBackground()
 
 app.mount('#app')

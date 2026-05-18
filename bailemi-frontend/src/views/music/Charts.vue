@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen pb-24">
+  <div class="min-h-screen pb-40">
     <!-- 侧边栏 -->
     <Sidebar />
     

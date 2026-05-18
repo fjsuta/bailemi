@@ -3,12 +3,12 @@
     <router-view />
     <MusicPlayer />
     <Notification />
-    <ThemeToggle />
+    <Settings />
   </div>
 </template>
 
 <script setup>
 import MusicPlayer from '@/components/music/MusicPlayer.vue'
 import Notification from '@/components/Notification.vue'
-import ThemeToggle from '@/components/ThemeToggle.vue'
+import Settings from '@/components/Settings.vue'
 </script>
