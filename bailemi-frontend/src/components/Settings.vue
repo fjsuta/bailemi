@@ -1,5 +1,16 @@
 <template>
   <div>
+    <button
+      @click="showSettings = true"
+      class="fixed top-4 right-4 z-40 glass rounded-xl p-3 hover:bg-white/20 dark:hover:bg-slate-700/50 transition-all"
+      title="设置"
+    >
+      <svg class="w-6 h-6 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+    </button>
+
     <Teleport to="body">
       <div v-if="showSettings" class="fixed inset-0 z-50 flex items-center justify-center">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showSettings = false"></div>
