@@ -237,3 +237,35 @@ func (h *PlaylistHandler) GetRecommendedPlaylists(c *gin.Context) {
 
 	response.SuccessWithPagination(c, playlists, page, pageSize, total)
 }
+
+func (h *PlaylistHandler) ListPlaylists(c *gin.Context) {
+	page := getIntQuery(c, "page", 1)
+	pageSize := getIntQuery(c, "page_size", 20)
+	tag := c.Query("tag")
+	sort := c.DefaultQuery("sort", "hot")
+
+	var userID *uint64
+	if uid, exists := c.Get("user_id"); exists {
+		id := uid.(uint64)
+		userID = &id
+	}
+
+	playlists, total, err := h.socialService.ListPlaylists(c.Request.Context(), page, pageSize, tag, sort, userID)
+	if err != nil {
+		errors.Error(c, 500, 10000, "获取失败")
+		return
+	}
+
+	response.SuccessWithPagination(c, playlists, page, pageSize, total)
+}
+
+func getIntQuery(c *gin.Context, key string, defaultVal int) int {
+	val, err := strconv.Atoi(c.Query(key))
+	if err != nil || val < 1 {
+		return defaultVal
+	}
+	if val > 100 {
+		return 100
+	}
+	return val
+}

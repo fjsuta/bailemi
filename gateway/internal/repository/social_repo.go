@@ -327,3 +327,30 @@ func (r *SocialRepository) GetPublicPlaylists(ctx context.Context, page, pageSiz
 	err = r.db.WithContext(ctx).Where("is_public = 1 AND deleted_at IS NULL").Preload("User").Offset(offset).Limit(pageSize).Order("play_count DESC").Find(&playlists).Error
 	return playlists, total, err
 }
+
+func (r *SocialRepository) ListPlaylists(ctx context.Context, page, pageSize int, tag, sort string) ([]model.Playlist, int64, error) {
+	var playlists []model.Playlist
+	var total int64
+
+	query := r.db.WithContext(ctx).Model(&model.Playlist{}).Where("is_public = 1 AND deleted_at IS NULL")
+
+	if tag != "" && tag != "all" {
+		query = query.Where("tags LIKE ?", "%"+tag+"%")
+	}
+
+	err := query.Count(&total).Error
+	if err != nil {
+		return nil, 0, err
+	}
+
+	offset := (page - 1) * pageSize
+	orderBy := "play_count DESC"
+	if sort == "new" {
+		orderBy = "created_at DESC"
+	} else if sort == "hot" {
+		orderBy = "play_count DESC"
+	}
+
+	err = query.Preload("User").Offset(offset).Limit(pageSize).Order(orderBy).Find(&playlists).Error
+	return playlists, total, err
+}

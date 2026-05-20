@@ -55,10 +55,12 @@ func main() {
 	authHandler := handler.NewAuthHandler(authService, userService)
 	userHandler := handler.NewUserHandler(userService)
 	musicHandler := handler.NewMusicHandler(musicService)
+	artistHandler := handler.NewArtistHandler(musicService)
 	playlistHandler := handler.NewPlaylistHandler(socialService)
 	playHandler := handler.NewPlayHandler(playService, musicService)
 	searchHandler := handler.NewSearchHandler(musicService, socialService)
 	commentHandler := handler.NewCommentHandler(socialService)
+	chartHandler := handler.NewChartHandler(musicService)
 
 	authMiddleware := middleware.NewAuthMiddleware(jwtManager)
 
@@ -107,9 +109,10 @@ func main() {
 
 		artist := api.Group("/artist")
 		{
-			artist.GET("/:artist_id", authMiddleware.OptionalAuth(), musicHandler.GetArtist)
-			artist.GET("/:artist_id/songs", musicHandler.GetArtist)
-			artist.GET("/:artist_id/albums", musicHandler.GetArtist)
+			artist.GET("", authMiddleware.OptionalAuth(), artistHandler.ListArtists)
+			artist.GET("/:artist_id", authMiddleware.OptionalAuth(), artistHandler.GetArtist)
+			artist.GET("/:artist_id/songs", artistHandler.GetArtistSongs)
+			artist.GET("/:artist_id/albums", artistHandler.GetArtistAlbums)
 		}
 
 		genres := api.Group("/genres")
@@ -119,6 +122,7 @@ func main() {
 
 		playlist := api.Group("/playlist")
 		{
+			playlist.GET("", authMiddleware.OptionalAuth(), playlistHandler.ListPlaylists)
 			playlist.POST("", authMiddleware.RequireAuth(), playlistHandler.CreatePlaylist)
 			playlist.GET("/:playlist_id", authMiddleware.OptionalAuth(), playlistHandler.GetPlaylist)
 			playlist.PUT("/:playlist_id", authMiddleware.RequireAuth(), playlistHandler.UpdatePlaylist)
@@ -144,6 +148,14 @@ func main() {
 		{
 			play.POST("/report", authMiddleware.RequireAuth(), playHandler.ReportPlay)
 			play.GET("/history", authMiddleware.RequireAuth(), playHandler.GetPlayHistory)
+		}
+
+		charts := api.Group("/charts")
+		{
+			charts.GET("", authMiddleware.OptionalAuth(), chartHandler.GetCharts)
+			charts.GET("/hot", authMiddleware.OptionalAuth(), chartHandler.GetHotSongs)
+			charts.GET("/new", authMiddleware.OptionalAuth(), chartHandler.GetNewSongs)
+			charts.GET("/rising", authMiddleware.OptionalAuth(), chartHandler.GetRisingSongs)
 		}
 
 		rank := api.Group("/rank")

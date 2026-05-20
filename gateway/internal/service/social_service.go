@@ -189,6 +189,32 @@ func (s *SocialService) GetRecommendedPlaylists(ctx context.Context, page, pageS
 	return responses, total, nil
 }
 
+func (s *SocialService) ListPlaylists(ctx context.Context, page, pageSize int, tag, sort string, userID *uint64) ([]model.PlaylistResponse, int64, error) {
+	if page < 1 {
+		page = 1
+	}
+	if pageSize < 1 || pageSize > 100 {
+		pageSize = 20
+	}
+
+	playlists, total, err := s.socialRepo.ListPlaylists(ctx, page, pageSize, tag, sort)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	responses := make([]model.PlaylistResponse, len(playlists))
+	for i, playlist := range playlists {
+		isFavorited := false
+		if userID != nil && *userID > 0 {
+			isFavorited, _ = s.socialRepo.IsFavorited(ctx, *userID, 2, playlist.ID)
+		}
+		resp, _ := s.buildPlaylistResponse(ctx, &playlist, isFavorited)
+		responses[i] = *resp
+	}
+
+	return responses, total, nil
+}
+
 func (s *SocialService) buildPlaylistResponse(ctx context.Context, playlist *model.Playlist, isFavorited bool) (*model.PlaylistResponse, error) {
 	playlistSongs, _ := s.socialRepo.GetPlaylistSongs(ctx, playlist.ID)
 

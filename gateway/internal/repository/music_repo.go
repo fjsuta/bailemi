@@ -103,6 +103,33 @@ func (r *MusicRepository) GetArtistByUserID(ctx context.Context, userID uint64) 
 	return &artist, nil
 }
 
+func (r *MusicRepository) ListArtists(ctx context.Context, page, pageSize int, sort, letter string) ([]model.Artist, int64, error) {
+	var artists []model.Artist
+	var total int64
+
+	query := r.db.WithContext(ctx).Model(&model.Artist{}).Where("status = ?", 1)
+
+	if letter != "" && letter != "all" {
+		query = query.Where("name LIKE ?", letter+"%")
+	}
+
+	err := query.Count(&total).Error
+	if err != nil {
+		return nil, 0, err
+	}
+
+	offset := (page - 1) * pageSize
+	orderBy := "fan_count DESC"
+	if sort == "new" {
+		orderBy = "created_at DESC"
+	} else if sort == "name" {
+		orderBy = "name ASC"
+	}
+
+	err = query.Offset(offset).Limit(pageSize).Order(orderBy).Find(&artists).Error
+	return artists, total, err
+}
+
 func (r *MusicRepository) GetLyricBySongID(ctx context.Context, songID uint64) (*model.Lyric, error) {
 	var lyric model.Lyric
 	err := r.db.WithContext(ctx).Where("song_id = ?", songID).First(&lyric).Error
@@ -236,6 +263,12 @@ func (r *MusicRepository) GetHotSongs(ctx context.Context, limit int) ([]model.S
 func (r *MusicRepository) GetNewSongs(ctx context.Context, limit int) ([]model.Song, error) {
 	var songs []model.Song
 	err := r.db.WithContext(ctx).Where("deleted_at IS NULL AND status = ?", 1).Preload("Artist").Preload("Album").Preload("Genre").Order("created_at DESC").Limit(limit).Find(&songs).Error
+	return songs, err
+}
+
+func (r *MusicRepository) GetRisingSongs(ctx context.Context, limit int) ([]model.Song, error) {
+	var songs []model.Song
+	err := r.db.WithContext(ctx).Where("deleted_at IS NULL AND status = ?", 1).Preload("Artist").Preload("Album").Preload("Genre").Order("play_count DESC").Limit(limit).Find(&songs).Error
 	return songs, err
 }
 
