@@ -1,7 +1,15 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useBackendStore } from '@/stores/backend'
+import { initApi } from '@/utils/api'
 
 const routes = [
+  {
+    path: '/backend-config',
+    name: 'BackendConfig',
+    component: () => import('@/components/BackendConfig.vue'),
+    meta: { requiresAuth: false, skipBackendCheck: true }
+  },
   {
     path: '/',
     name: 'Home',
@@ -86,8 +94,21 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+  const backendStore = useBackendStore()
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const guestOnly = to.matched.some(record => record.meta.guestOnly)
+  const skipBackendCheck = to.matched.some(record => record.meta.skipBackendCheck)
+
+  // 检查是否已完成后端配置（跳过后端配置页面本身）
+  if (!skipBackendCheck) {
+    const backendConfigured = localStorage.getItem('backendConfigured')
+    if (!backendConfigured) {
+      next('/backend-config')
+      return
+    }
+    // 初始化 API
+    initApi()
+  }
 
   if (requiresAuth && !authStore.isAuthenticated) {
     next('/login')
