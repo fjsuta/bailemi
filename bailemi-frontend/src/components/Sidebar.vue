@@ -62,24 +62,7 @@
       </nav>
 
       <!-- 底部区域 -->
-      <div class="p-3 border-t border-white/10 space-y-2">
-        <!-- 设置按钮 -->
-        <button 
-          @click="openSettings"
-          class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/15 transition-all w-full"
-        >
-          <svg class="w-6 h-6 flex-shrink-0 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-          </svg>
-          <span 
-            v-show="sidebarStore.isOpen" 
-            class="text-sm text-slate-300 font-medium"
-          >
-            设置
-          </span>
-        </button>
-
+      <div class="p-3 border-t border-white/10">
         <!-- 用户信息 -->
         <div class="flex items-center gap-3 px-4 py-3">
           <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center flex-shrink-0 overflow-hidden">
@@ -141,18 +124,6 @@
 
       <!-- 右侧按钮区域 -->
       <div class="flex items-center gap-2 ml-4">
-        <!-- 设置按钮 -->
-        <button 
-          @click="openSettings"
-          class="p-3 rounded-2xl bg-white/5 hover:bg-white/15 transition-all"
-          title="设置"
-        >
-          <svg class="w-6 h-6 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-          </svg>
-        </button>
-
         <!-- 折叠按钮 -->
         <button 
           @click="sidebarStore.toggle"
@@ -176,13 +147,12 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useSidebarStore } from '@/stores/sidebar'
 
 const route = useRoute()
 const sidebarStore = useSidebarStore()
-const settingsRef = ref(null)
 
 const navItems = computed(() => [
   { 
@@ -211,12 +181,6 @@ const navItems = computed(() => [
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' 
   }
 ])
-
-const openSettings = () => {
-  if (window.openSettings) {
-    window.openSettings()
-  }
-}
 </script>
 
 <style scoped>
