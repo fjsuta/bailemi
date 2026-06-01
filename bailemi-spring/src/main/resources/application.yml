@@ -19,7 +19,7 @@ jwt.access-token-expiration=${JWT_ACCESS_EXPIRATION:86400000}
 jwt.refresh-token-expiration=${JWT_REFRESH_EXPIRATION:2592000000}
 
 # CORS Configuration
-cors.allowed-origins=${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+cors.allowed-origins=${CORS_ORIGINS:http://localhost:5173,http://localhost:3000,http://localhost:8081}
 
 # Logging
 logging.level.com.bailemi=DEBUG

@@ -314,7 +314,8 @@ const handleLogin = async () => {
 
 const handleOAuthLogin = (provider) => {
   const callbackUrl = encodeURIComponent(window.location.origin + '/#/oauth/' + provider)
-  window.location.href = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'}/api/v1/oauth/${provider}/authorize?callback=${callbackUrl}`
+  const authBaseUrl = import.meta.env.VITE_AUTH_API_BASE_URL || 'http://localhost:8080'
+  window.location.href = `${authBaseUrl}/api/v1/oauth/${provider}/authorize?callback=${callbackUrl}`
 }
 
 const loadOAuthConfig = async () => {
